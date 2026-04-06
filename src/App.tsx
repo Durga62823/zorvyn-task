@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect, useMemo } from 'react'
+import { AuthAccessPanel } from './components/common/AuthAccessPanel'
 import { RoleSwitcher } from './components/common/RoleSwitcher'
 import { ThemeToggle } from './components/common/ThemeToggle'
 import { SummaryCards } from './components/dashboard/SummaryCards'
@@ -48,7 +49,7 @@ const ActionPlanPanel = lazy(async () => {
 function SectionFallback({ minHeightClass }: { minHeightClass?: string }) {
   return (
     <div
-      className={`rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--soft-shadow)] ${minHeightClass ?? 'min-h-[280px]'}`}
+      className={`panel-surface rounded-[1.6rem] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--soft-shadow)] ${minHeightClass ?? 'min-h-[280px]'}`}
     >
       <div className="h-full animate-pulse rounded-xl bg-[var(--surface-muted)]" />
     </div>
@@ -80,26 +81,50 @@ function App() {
 
   return (
     <div className="app-shell min-h-screen pb-10">
-      <div className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6 lg:px-8">
-        <header className="reveal-panel rounded-3xl border border-[var(--border)] bg-[var(--surface)] px-6 py-8 shadow-[var(--soft-shadow)]">
-          <p className="inline-flex rounded-full bg-[var(--surface-muted)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
-            Finance cockpit
-          </p>
-          <h1 className="mt-4 max-w-2xl text-3xl font-semibold leading-tight text-[var(--text-strong)] sm:text-5xl">
-            Money moves, explained with clarity.
-          </h1>
-          <p className="mt-3 max-w-2xl text-sm text-[var(--text-muted)] sm:text-base">
-            Track balance momentum, inspect transactions, and simulate role-based behavior in a frontend-only dashboard.
-          </p>
+      <div className="dashboard-frame mx-auto max-w-[1240px] px-4 py-7 sm:px-6 lg:px-8">
+        <header className="hero-panel reveal-panel">
+          <div className="hero-grid">
+            <div>
+              <p className="hero-eyebrow">Ledger atelier</p>
+              <h1 className="hero-title mt-4 max-w-2xl text-3xl font-semibold leading-tight text-[var(--text-strong)] sm:text-5xl">
+                Every transaction now reads like a story.
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm text-[var(--text-muted)] sm:text-base">
+                Explore balance momentum, inspect cash movement, and switch perspectives between admin and viewer controls.
+              </p>
 
-          <div className="mt-5 flex flex-wrap items-center gap-2">
-            <RoleSwitcher />
-            <ThemeToggle />
+              <div className="mt-6 flex flex-wrap items-center gap-2">
+                <RoleSwitcher />
+                <ThemeToggle />
+              </div>
+
+              <div className="mt-4 max-w-lg">
+                <AuthAccessPanel />
+              </div>
+            </div>
+
+            <aside className="hero-aside">
+              <p className="hero-aside-label">Session pulse</p>
+              <ul className="mt-3 space-y-2">
+                <li className="hero-signal">
+                  <span>Sync status</span>
+                  <strong>{isLoading ? 'Refreshing' : 'Stable'}</strong>
+                </li>
+                <li className="hero-signal">
+                  <span>Visible records</span>
+                  <strong>{visibleTransactions.length}</strong>
+                </li>
+                <li className="hero-signal">
+                  <span>Total ledger</span>
+                  <strong>{transactions.length}</strong>
+                </li>
+              </ul>
+            </aside>
           </div>
         </header>
 
         {errorMessage ? (
-          <p className="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700">
+          <p className="mt-4 rounded-xl border border-[var(--negative)] bg-[var(--accent-soft)] px-4 py-3 text-sm font-medium text-[var(--negative)]">
             {errorMessage}
           </p>
         ) : null}
@@ -157,10 +182,10 @@ function App() {
           </Suspense>
         </div>
 
-        <p className="mt-4 text-right text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+        <p className="mt-5 text-right text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
           {isLoading
-            ? 'Syncing mock API data...'
-            : 'Mock API + local storage persistence enabled'}
+            ? 'Updating mock API feed...'
+            : 'Mock API and local storage persistence active'}
         </p>
       </div>
     </div>

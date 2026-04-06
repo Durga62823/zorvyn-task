@@ -5,10 +5,19 @@ import {
   DEFAULT_FILTERS,
   DEFAULT_SORT,
 } from '../data/mockTransactions'
+import {
+  clearLoginToken,
+  getActiveSession,
+  loginUser as loginStoredUser,
+  registerUser as registerStoredUser,
+} from '../services/authStorage'
 import { mockFinanceApi } from '../services/mockFinanceApi'
 import type {
   CategoryBudgets,
   ExpenseCategory,
+  LoginCredentials,
+  RegisteredUser,
+  RegisterUserDraft,
   ThemeMode,
   Transaction,
   TransactionDraft,
@@ -33,12 +42,17 @@ interface DashboardState {
   sort: TransactionSort
   budgets: CategoryBudgets
   selectedRole: UserRole
+  authToken: string | null
+  currentUser: RegisteredUser | null
   theme: ThemeMode
   isInitialized: boolean
   isLoading: boolean
   errorMessage: string | null
   initialize: () => Promise<void>
   setRole: (role: UserRole) => void
+  registerAccount: (draft: RegisterUserDraft) => RegisteredUser
+  loginAccount: (credentials: LoginCredentials) => RegisteredUser
+  logoutAccount: () => void
   setTheme: (mode: ThemeMode) => void
   toggleTheme: () => void
   updateFilters: (patch: Partial<TransactionFilters>) => void
@@ -52,7 +66,8 @@ interface DashboardState {
   deleteTransaction: (id: string) => Promise<void>
 }
 
-const roleCanManageData = (role: UserRole) => role === 'admin'
+const roleCanManageData = (role: UserRole, token: string | null) =>
+  role === 'admin' && Boolean(token)
 
 const getErrorMessage = (error: unknown) =>
   error instanceof Error
@@ -67,6 +82,8 @@ export const useDashboardStore = create<DashboardState>()(
       sort: DEFAULT_SORT,
       budgets: DEFAULT_BUDGETS,
       selectedRole: 'viewer',
+      authToken: null,
+      currentUser: null,
       theme: getDefaultTheme(),
       isInitialized: false,
       isLoading: false,
@@ -76,6 +93,14 @@ export const useDashboardStore = create<DashboardState>()(
         if (get().isInitialized || get().isLoading) {
           return
         }
+
+        const activeSession = getActiveSession()
+
+        set({
+          currentUser: activeSession?.user ?? null,
+          authToken: activeSession?.token ?? null,
+          selectedRole: activeSession?.user.role ?? get().selectedRole,
+        })
 
         set({ isLoading: true, errorMessage: null })
 
@@ -103,7 +128,35 @@ export const useDashboardStore = create<DashboardState>()(
       },
 
       setRole: (role) => {
+        if (get().currentUser) {
+          return
+        }
+
         set({ selectedRole: role })
+      },
+
+      registerAccount: (draft) => registerStoredUser(draft),
+
+      loginAccount: (credentials) => {
+        const session = loginStoredUser(credentials)
+
+        set({
+          authToken: session.token,
+          currentUser: session.user,
+          selectedRole: session.user.role,
+        })
+
+        return session.user
+      },
+
+      logoutAccount: () => {
+        clearLoginToken()
+
+        set({
+          authToken: null,
+          currentUser: null,
+          selectedRole: 'viewer',
+        })
       },
 
       setTheme: (mode) => {
@@ -151,7 +204,7 @@ export const useDashboardStore = create<DashboardState>()(
       },
 
       setBudget: (category, limit) => {
-        if (!roleCanManageData(get().selectedRole)) {
+        if (!roleCanManageData(get().selectedRole, get().authToken)) {
           return
         }
 
@@ -166,7 +219,7 @@ export const useDashboardStore = create<DashboardState>()(
       },
 
       resetBudgets: () => {
-        if (!roleCanManageData(get().selectedRole)) {
+        if (!roleCanManageData(get().selectedRole, get().authToken)) {
           return
         }
 
@@ -174,7 +227,7 @@ export const useDashboardStore = create<DashboardState>()(
       },
 
       addTransaction: async (draft) => {
-        if (!roleCanManageData(get().selectedRole)) {
+        if (!roleCanManageData(get().selectedRole, get().authToken)) {
           return
         }
 
@@ -193,7 +246,7 @@ export const useDashboardStore = create<DashboardState>()(
       },
 
       editTransaction: async (id, draft) => {
-        if (!roleCanManageData(get().selectedRole)) {
+        if (!roleCanManageData(get().selectedRole, get().authToken)) {
           return
         }
 
@@ -214,7 +267,7 @@ export const useDashboardStore = create<DashboardState>()(
       },
 
       deleteTransaction: async (id) => {
-        if (!roleCanManageData(get().selectedRole)) {
+        if (!roleCanManageData(get().selectedRole, get().authToken)) {
           return
         }
 

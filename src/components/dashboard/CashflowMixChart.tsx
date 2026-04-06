@@ -89,13 +89,23 @@ export function CashflowMixChart({ transactions }: CashflowMixChartProps) {
               }}
             />
             <Legend wrapperStyle={{ fontSize: '12px' }} />
-            <Bar dataKey="income" name="Income" fill="#2a9d8f" radius={[6, 6, 0, 0]} />
-            <Bar dataKey="expenses" name="Expenses" fill="#e07a5f" radius={[6, 6, 0, 0]} />
+            <Bar
+              dataKey="income"
+              name="Income"
+              fill="var(--chart-income)"
+              radius={[6, 6, 0, 0]}
+            />
+            <Bar
+              dataKey="expenses"
+              name="Expenses"
+              fill="var(--chart-expense)"
+              radius={[6, 6, 0, 0]}
+            />
             <Line
               type="monotone"
               dataKey="net"
               name="Net"
-              stroke="#3d405b"
+              stroke="var(--chart-net)"
               strokeWidth={2.5}
               dot={{ r: 3 }}
             />

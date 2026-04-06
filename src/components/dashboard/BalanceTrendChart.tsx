@@ -55,8 +55,8 @@ export function BalanceTrendChart({ transactions }: BalanceTrendChartProps) {
           <AreaChart data={data}>
             <defs>
               <linearGradient id="balanceGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#0d9488" stopOpacity={0.45} />
-                <stop offset="95%" stopColor="#0d9488" stopOpacity={0.04} />
+                <stop offset="5%" stopColor="var(--chart-primary)" stopOpacity={0.5} />
+                <stop offset="95%" stopColor="var(--chart-primary)" stopOpacity={0.05} />
               </linearGradient>
             </defs>
 
@@ -85,7 +85,7 @@ export function BalanceTrendChart({ transactions }: BalanceTrendChartProps) {
             <Area
               type="monotone"
               dataKey="runningBalance"
-              stroke="#0d9488"
+              stroke="var(--chart-primary)"
               strokeWidth={2.6}
               fill="url(#balanceGradient)"
             />

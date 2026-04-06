@@ -8,7 +8,14 @@ interface SpendingBreakdownChartProps {
   transactions: Transaction[]
 }
 
-const CATEGORY_COLORS = ['#e07a5f', '#3d405b', '#81b29a', '#f2cc8f', '#6b9080', '#577590']
+const CATEGORY_COLORS = [
+  'var(--chart-c1)',
+  'var(--chart-c2)',
+  'var(--chart-c3)',
+  'var(--chart-c4)',
+  'var(--chart-c5)',
+  'var(--chart-c6)',
+]
 
 export function SpendingBreakdownChart({
   transactions,

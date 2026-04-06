@@ -37,6 +37,7 @@ export function TransactionsPanel() {
     filters,
     sort,
     selectedRole,
+    authToken,
     isLoading,
     updateFilters,
     clearFilters,
@@ -73,7 +74,7 @@ export function TransactionsPanel() {
     return checks.filter(Boolean).length
   }, [filters])
 
-  const canManage = selectedRole === 'admin'
+  const canManage = selectedRole === 'admin' && Boolean(authToken)
 
   const openCreateModal = () => {
     setEditingTransaction(null)
@@ -126,14 +127,14 @@ export function TransactionsPanel() {
           <button
             type="button"
             onClick={() => exportTransactionsAsCsv(visibleTransactions)}
-            className="rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-strong)]"
+            className="control-chip rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-strong)]"
           >
             Export CSV
           </button>
           <button
             type="button"
             onClick={() => exportTransactionsAsJson(visibleTransactions)}
-            className="rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-strong)]"
+            className="control-chip rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-strong)]"
           >
             Export JSON
           </button>
@@ -141,7 +142,7 @@ export function TransactionsPanel() {
             <button
               type="button"
               onClick={openCreateModal}
-              className="rounded-lg bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-white"
+              className="rounded-lg border border-[var(--accent)] bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-white shadow-[var(--soft-shadow)] transition hover:brightness-105"
             >
               Add transaction
             </button>
@@ -254,7 +255,7 @@ export function TransactionsPanel() {
             onClick={() =>
               setSortDirection(sort.direction === 'asc' ? 'desc' : 'asc')
             }
-            className="flex-1 rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-medium text-[var(--text-strong)]"
+            className="control-chip flex-1 rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-sm font-medium text-[var(--text-strong)]"
           >
             {sort.direction === 'asc' ? 'Ascending' : 'Descending'}
           </button>
@@ -262,7 +263,7 @@ export function TransactionsPanel() {
           <button
             type="button"
             onClick={clearFilters}
-            className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-medium text-[var(--text-strong)]"
+            className="control-chip rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-medium text-[var(--text-strong)]"
           >
             Reset
           </button>
@@ -278,7 +279,11 @@ export function TransactionsPanel() {
             {activeFilterCount} active filters
           </p>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
-            {canManage ? 'Admin mode: editing enabled' : 'Viewer mode: read-only access'}
+            {canManage
+              ? 'Admin authenticated: editing enabled'
+              : selectedRole === 'admin'
+                ? 'Admin role selected: login required'
+                : 'Viewer mode: read-only access'}
           </p>
         </div>
       </div>

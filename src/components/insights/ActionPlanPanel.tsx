@@ -46,7 +46,7 @@ export function ActionPlanPanel({ transactions }: ActionPlanPanelProps) {
           onClick={() => {
             void copyChecklist()
           }}
-          className="rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-strong)]"
+          className="control-chip rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-strong)]"
         >
           Copy checklist
         </button>
@@ -59,11 +59,11 @@ export function ActionPlanPanel({ transactions }: ActionPlanPanelProps) {
             className={clsx(
               'rounded-xl border px-4 py-3',
               recommendation.impact === 'high' &&
-                'border-rose-300 bg-rose-50/70 text-rose-950',
+                'border-[var(--negative)]/45 bg-[var(--negative)]/10 text-[var(--text-strong)]',
               recommendation.impact === 'medium' &&
-                'border-amber-300 bg-amber-50/70 text-amber-950',
+                'border-[var(--chart-c3)]/60 bg-[var(--chart-c3)]/14 text-[var(--text-strong)]',
               recommendation.impact === 'low' &&
-                'border-emerald-300 bg-emerald-50/70 text-emerald-950',
+                'border-[var(--positive)]/45 bg-[var(--positive)]/10 text-[var(--text-strong)]',
             )}
           >
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em]">

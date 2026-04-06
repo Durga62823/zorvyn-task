@@ -46,6 +46,26 @@ export interface TransactionDraft {
 export const USER_ROLES = ['viewer', 'admin'] as const
 export type UserRole = (typeof USER_ROLES)[number]
 
+export interface RegisteredUser {
+  id: string
+  name: string
+  email: string
+  role: UserRole
+  createdAt: string
+}
+
+export interface RegisterUserDraft {
+  name: string
+  email: string
+  password: string
+  role: UserRole
+}
+
+export interface LoginCredentials {
+  email: string
+  password: string
+}
+
 export type ThemeMode = 'light' | 'dark'
 
 export interface TransactionFilters {

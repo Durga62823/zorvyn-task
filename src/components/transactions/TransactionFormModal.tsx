@@ -103,13 +103,13 @@ export function TransactionFormModal({
 
   return (
     <div
-      className="fixed inset-0 z-40 flex items-center justify-center bg-black/45 px-4"
+      className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 px-4 backdrop-blur-[2px]"
       onMouseDown={onClose}
       role="presentation"
     >
       <form
         onSubmit={submitForm}
-        className="w-full max-w-lg rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--soft-shadow)]"
+        className="w-full max-w-lg rounded-[1.55rem] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--soft-shadow)]"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">
@@ -117,7 +117,7 @@ export function TransactionFormModal({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-[var(--border)] px-2 py-1 text-sm text-[var(--text-muted)]"
+            className="control-chip rounded-lg border border-[var(--border)] px-2 py-1 text-sm text-[var(--text-muted)]"
           >
             Close
           </button>
@@ -205,20 +205,20 @@ export function TransactionFormModal({
           />
         </label>
 
-        {formError ? <p className="mt-3 text-sm text-rose-600">{formError}</p> : null}
+        {formError ? <p className="mt-3 text-sm text-[var(--negative)]">{formError}</p> : null}
 
         <div className="mt-4 flex items-center justify-end gap-2">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-medium text-[var(--text-strong)]"
+            className="control-chip rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-medium text-[var(--text-strong)]"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="rounded-lg bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+            className="rounded-lg border border-[var(--accent)] bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-white shadow-[var(--soft-shadow)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSubmitting ? 'Saving...' : initialTransaction ? 'Save changes' : 'Add transaction'}
           </button>

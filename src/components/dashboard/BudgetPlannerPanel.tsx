@@ -17,6 +17,7 @@ interface BudgetPlannerPanelProps {
 export function BudgetPlannerPanel({ transactions }: BudgetPlannerPanelProps) {
   const budgets = useDashboardStore((state) => state.budgets)
   const selectedRole = useDashboardStore((state) => state.selectedRole)
+  const authToken = useDashboardStore((state) => state.authToken)
   const filters = useDashboardStore((state) => state.filters)
   const setBudget = useDashboardStore((state) => state.setBudget)
   const resetBudgets = useDashboardStore((state) => state.resetBudgets)
@@ -44,7 +45,7 @@ export function BudgetPlannerPanel({ transactions }: BudgetPlannerPanelProps) {
 
   const performance = getBudgetPerformance(transactions, budgets, monthForBudget)
   const totals = getBudgetTotals(performance)
-  const canManage = selectedRole === 'admin'
+  const canManage = selectedRole === 'admin' && Boolean(authToken)
 
   return (
     <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--soft-shadow)]">
@@ -73,7 +74,7 @@ export function BudgetPlannerPanel({ transactions }: BudgetPlannerPanelProps) {
             <button
               type="button"
               onClick={resetBudgets}
-              className="rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-strong)]"
+              className="control-chip rounded-lg border border-[var(--border)] bg-[var(--surface-muted)] px-3 py-2 text-xs font-semibold uppercase tracking-wide text-[var(--text-strong)]"
             >
               Reset budgets
             </button>
@@ -111,9 +112,9 @@ export function BudgetPlannerPanel({ transactions }: BudgetPlannerPanelProps) {
                   <span
                     className={clsx(
                       'rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]',
-                      item.status === 'on-track' && 'bg-emerald-100 text-emerald-800',
-                      item.status === 'at-risk' && 'bg-amber-100 text-amber-800',
-                      item.status === 'over' && 'bg-rose-100 text-rose-700',
+                      item.status === 'on-track' && 'bg-[var(--positive)]/15 text-[var(--positive)]',
+                      item.status === 'at-risk' && 'bg-[var(--chart-c3)]/20 text-[var(--chart-c5)]',
+                      item.status === 'over' && 'bg-[var(--negative)]/15 text-[var(--negative)]',
                     )}
                   >
                     {item.status.replace('-', ' ')}
@@ -141,9 +142,9 @@ export function BudgetPlannerPanel({ transactions }: BudgetPlannerPanelProps) {
                 <div
                   className={clsx(
                     'h-full rounded-full transition-[width] duration-300',
-                    item.status === 'on-track' && 'bg-emerald-500',
-                    item.status === 'at-risk' && 'bg-amber-500',
-                    item.status === 'over' && 'bg-rose-500',
+                    item.status === 'on-track' && 'bg-[var(--positive)]',
+                    item.status === 'at-risk' && 'bg-[var(--chart-c3)]',
+                    item.status === 'over' && 'bg-[var(--negative)]',
                   )}
                   style={{ width: barWidth }}
                 />
@@ -160,7 +161,7 @@ export function BudgetPlannerPanel({ transactions }: BudgetPlannerPanelProps) {
 
       {!canManage ? (
         <p className="mt-3 text-xs text-[var(--text-muted)]">
-          Viewer mode is read-only. Switch to Admin to edit budget limits.
+          Viewer mode is read-only. Login with an Admin account to edit budget limits.
         </p>
       ) : null}
     </section>

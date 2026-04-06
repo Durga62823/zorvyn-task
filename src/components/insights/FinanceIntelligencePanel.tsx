@@ -69,7 +69,12 @@ export function FinanceIntelligencePanel({
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <article className="rounded-xl bg-[var(--surface-muted)] px-4 py-3">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">Projected next net</p>
-          <p className={clsx('mt-1 text-lg font-semibold', forecast.projectedNet >= 0 ? 'text-emerald-600' : 'text-rose-600')}>
+          <p
+            className={clsx(
+              'mt-1 text-lg font-semibold',
+              forecast.projectedNet >= 0 ? 'text-[var(--positive)]' : 'text-[var(--negative)]',
+            )}
+          >
             {formatSignedCurrency(forecast.projectedNet)}
           </p>
         </article>
@@ -79,9 +84,9 @@ export function FinanceIntelligencePanel({
           <p
             className={clsx(
               'mt-1 text-lg font-semibold uppercase',
-              forecast.confidence === 'high' && 'text-emerald-600',
-              forecast.confidence === 'medium' && 'text-amber-600',
-              forecast.confidence === 'low' && 'text-rose-600',
+              forecast.confidence === 'high' && 'text-[var(--positive)]',
+              forecast.confidence === 'medium' && 'text-[var(--chart-c3)]',
+              forecast.confidence === 'low' && 'text-[var(--negative)]',
             )}
           >
             {forecast.confidence}
@@ -95,7 +100,16 @@ export function FinanceIntelligencePanel({
 
         <article className="rounded-xl bg-[var(--surface-muted)] px-4 py-3">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">Runway estimate</p>
-          <p className={clsx('mt-1 text-lg font-semibold', runwayDays >= 90 ? 'text-emerald-600' : runwayDays > 45 ? 'text-amber-600' : 'text-rose-600')}>
+          <p
+            className={clsx(
+              'mt-1 text-lg font-semibold',
+              runwayDays >= 90
+                ? 'text-[var(--positive)]'
+                : runwayDays > 45
+                  ? 'text-[var(--chart-c3)]'
+                  : 'text-[var(--negative)]',
+            )}
+          >
             {Number.isFinite(runwayDays) && runwayDays > 0 ? `${Math.round(runwayDays)} days` : 'Deficit risk'}
           </p>
         </article>
@@ -122,7 +136,12 @@ export function FinanceIntelligencePanel({
           />
           <p className="mt-2 text-sm text-[var(--text-muted)]">
             Simulated next-month net under stress:{' '}
-            <span className={clsx('font-semibold', stressedProjectedNet >= 0 ? 'text-emerald-600' : 'text-rose-600')}>
+            <span
+              className={clsx(
+                'font-semibold',
+                stressedProjectedNet >= 0 ? 'text-[var(--positive)]' : 'text-[var(--negative)]',
+              )}
+            >
               {formatSignedCurrency(stressedProjectedNet)}
             </span>
           </p>
@@ -145,7 +164,9 @@ export function FinanceIntelligencePanel({
                   <span
                     className={clsx(
                       'rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em]',
-                      anomaly.severity === 'high' ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-800',
+                      anomaly.severity === 'high'
+                        ? 'bg-[var(--negative)]/12 text-[var(--negative)]'
+                        : 'bg-[var(--chart-c3)]/16 text-[var(--chart-c5)]',
                     )}
                   >
                     {anomaly.severity}

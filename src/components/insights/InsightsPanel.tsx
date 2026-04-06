@@ -30,11 +30,11 @@ export function InsightsPanel({ transactions }: InsightsPanelProps) {
               className={clsx(
                 'stagger rounded-xl border px-4 py-3',
                 insight.tone === 'positive' &&
-                  'border-emerald-300 bg-emerald-50/70 text-emerald-900',
+                  'border-[var(--positive)]/45 bg-[var(--positive)]/10 text-[var(--text-strong)]',
                 insight.tone === 'neutral' &&
-                  'border-slate-300 bg-slate-100/70 text-slate-900',
+                  'border-[var(--border)] bg-[var(--surface-muted)] text-[var(--text-strong)]',
                 insight.tone === 'warning' &&
-                  'border-amber-300 bg-amber-50/80 text-amber-950',
+                  'border-[var(--chart-c3)]/60 bg-[var(--chart-c3)]/14 text-[var(--text-strong)]',
               )}
               style={{ animationDelay: `${120 + index * 100}ms` }}
             >

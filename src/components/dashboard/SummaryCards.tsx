@@ -13,17 +13,17 @@ export function SummaryCards({ transactions }: SummaryCardsProps) {
     {
       label: 'Total balance',
       value: formatCurrency(summary.balance),
-      tone: summary.balance >= 0 ? 'text-emerald-600' : 'text-rose-600',
+      tone: summary.balance >= 0 ? 'text-[var(--positive)]' : 'text-[var(--negative)]',
     },
     {
       label: 'Income',
       value: formatCurrency(summary.income),
-      tone: 'text-emerald-600',
+      tone: 'text-[var(--positive)]',
     },
     {
       label: 'Expenses',
       value: formatCurrency(summary.expenses),
-      tone: 'text-rose-600',
+      tone: 'text-[var(--negative)]',
     },
   ]
 
@@ -32,18 +32,20 @@ export function SummaryCards({ transactions }: SummaryCardsProps) {
       {cards.map((card, index) => (
         <article
           key={card.label}
-          className="stagger rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--soft-shadow)]"
+          className="summary-card stagger rounded-[1.35rem] border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--soft-shadow)]"
           style={{ animationDelay: `${120 + index * 80}ms` }}
         >
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--text-muted)]">
             {card.label}
           </p>
-          <p className={`mt-3 text-2xl font-bold ${card.tone}`}>{card.value}</p>
+          <p className={`mt-3 text-2xl font-bold tracking-tight ${card.tone}`}>
+            {card.value}
+          </p>
         </article>
       ))}
 
       <article
-        className="stagger rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--soft-shadow)]"
+        className="summary-card stagger rounded-[1.35rem] border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--soft-shadow)]"
         style={{ animationDelay: '360ms' }}
       >
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--text-muted)]">

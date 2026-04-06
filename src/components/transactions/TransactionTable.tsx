@@ -48,8 +48,8 @@ export function TransactionTable({
                     className={clsx(
                       'inline-flex rounded-full px-2 py-1 text-xs font-semibold uppercase tracking-wide',
                       transaction.type === 'income'
-                        ? 'bg-emerald-100 text-emerald-800'
-                        : 'bg-rose-100 text-rose-800',
+                        ? 'bg-[var(--positive)]/15 text-[var(--positive)]'
+                        : 'bg-[var(--negative)]/15 text-[var(--negative)]',
                     )}
                   >
                     {transaction.type}
@@ -59,8 +59,8 @@ export function TransactionTable({
                   className={clsx(
                     'whitespace-nowrap px-4 py-3 font-semibold',
                     transaction.type === 'income'
-                      ? 'text-emerald-600'
-                      : 'text-rose-600',
+                      ? 'text-[var(--positive)]'
+                      : 'text-[var(--negative)]',
                   )}
                 >
                   {transaction.type === 'income' ? '+' : '-'}
@@ -82,7 +82,7 @@ export function TransactionTable({
                       <button
                         type="button"
                         onClick={() => onDelete(transaction.id)}
-                        className="rounded-md border border-rose-200 bg-rose-50 px-2 py-1 text-xs font-medium text-rose-700"
+                        className="rounded-md border border-[var(--negative)]/40 bg-[var(--negative)]/10 px-2 py-1 text-xs font-medium text-[var(--negative)]"
                       >
                         Delete
                       </button>

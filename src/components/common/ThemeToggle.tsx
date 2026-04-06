@@ -8,7 +8,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggleTheme}
-      className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text-strong)] transition hover:border-[var(--accent)]"
+      className="control-chip rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm font-semibold text-[var(--text-strong)] shadow-[var(--soft-shadow)] transition hover:border-[var(--accent-strong)]"
     >
       {theme === 'dark' ? 'Light mode' : 'Dark mode'}
     </button>
