@@ -114,7 +114,7 @@ export function TransactionsPanel() {
   }
 
   return (
-    <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--soft-shadow)]">
+    <section className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--soft-shadow)] sm:p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h2 className="text-xl font-semibold text-[var(--text-strong)]">Transactions</h2>
@@ -249,7 +249,7 @@ export function TransactionsPanel() {
           <option value="category">Sort by category</option>
         </select>
 
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <button
             type="button"
             onClick={() =>
@@ -274,7 +274,7 @@ export function TransactionsPanel() {
         <p className="text-sm text-[var(--text-muted)]">
           Showing {visibleTransactions.length} of {transactions.length} transactions.
         </p>
-        <div className="flex items-center gap-3">
+        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:justify-end sm:gap-3">
           <p className="rounded-full bg-[var(--surface-muted)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
             {activeFilterCount} active filters
           </p>

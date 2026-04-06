@@ -384,14 +384,70 @@ select:focus-visible {
     font-size: 15px;
   }
 
+  .dashboard-frame section,
+  .dashboard-frame article.summary-card {
+    border-radius: 1.15rem;
+  }
+
   .hero-panel {
     border-radius: 1.5rem;
     padding: 1.15rem;
   }
 
+  .hero-signal {
+    font-size: 0.76rem;
+    gap: 0.55rem;
+    padding: 0.52rem 0.58rem;
+  }
+
+  .hero-signal strong {
+    font-size: 0.78rem;
+  }
+
+  .control-chip {
+    width: 100%;
+  }
+
+  .recharts-responsive-container {
+    min-height: 245px;
+  }
+
+  .recharts-legend-wrapper {
+    font-size: 11px !important;
+  }
+
+  .recharts-cartesian-axis-tick-value {
+    font-size: 11px;
+  }
+
   .app-shell::before,
   .app-shell::after {
     transform: scale(0.82);
+  }
+}
+
+@media (max-width: 440px) {
+  .hero-eyebrow {
+    letter-spacing: 0.18em;
+  }
+
+  .hero-title {
+    font-size: clamp(1.62rem, 8vw, 2rem);
+    line-height: 1.12;
+  }
+
+  .dashboard-frame {
+    padding-left: 0.68rem;
+    padding-right: 0.68rem;
+  }
+
+  .dashboard-frame section,
+  .dashboard-frame article.summary-card {
+    padding: 0.92rem;
+  }
+
+  .recharts-responsive-container {
+    min-height: 225px;
   }
 }
 

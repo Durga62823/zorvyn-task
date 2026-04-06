@@ -7,13 +7,13 @@ export function RoleSwitcher() {
   const currentUser = useDashboardStore((state) => state.currentUser)
 
   return (
-    <label className="control-chip flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm shadow-[var(--soft-shadow)]">
+    <label className="control-chip flex w-full items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm shadow-[var(--soft-shadow)] min-[421px]:w-auto">
       <span className="font-medium text-[var(--text-muted)]">Role</span>
       <select
         value={selectedRole}
         onChange={(event) => setRole(event.target.value as UserRole)}
         disabled={Boolean(currentUser)}
-        className="rounded-md border border-[var(--border)] bg-[var(--surface-muted)] px-2 py-1 text-sm font-medium text-[var(--text-strong)] outline-none transition focus:border-[var(--accent-strong)] disabled:cursor-not-allowed disabled:opacity-70"
+        className="min-w-0 flex-1 rounded-md border border-[var(--border)] bg-[var(--surface-muted)] px-2 py-1 text-sm font-medium text-[var(--text-strong)] outline-none transition focus:border-[var(--accent-strong)] disabled:cursor-not-allowed disabled:opacity-70"
       >
         {USER_ROLES.map((role) => (
           <option key={role} value={role}>

@@ -103,13 +103,13 @@ export function TransactionFormModal({
 
   return (
     <div
-      className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 px-4 backdrop-blur-[2px]"
+      className="fixed inset-0 z-40 flex items-center justify-center overflow-y-auto bg-black/50 px-3 py-5 backdrop-blur-[2px] sm:px-4"
       onMouseDown={onClose}
       role="presentation"
     >
       <form
         onSubmit={submitForm}
-        className="w-full max-w-lg rounded-[1.55rem] border border-[var(--border)] bg-[var(--surface)] p-5 shadow-[var(--soft-shadow)]"
+        className="w-full max-w-lg rounded-[1.55rem] border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--soft-shadow)] sm:p-5"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">

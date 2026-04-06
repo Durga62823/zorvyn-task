@@ -17,7 +17,72 @@ export function TransactionTable({
 }: TransactionTableProps) {
   return (
     <div className="overflow-hidden rounded-xl border border-[var(--border)]">
-      <div className="max-h-[27rem] overflow-auto">
+      <div className="max-h-[27rem] overflow-auto p-2 sm:hidden">
+        <div className="space-y-2">
+          {transactions.map((transaction) => (
+            <article
+              key={transaction.id}
+              className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-3"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.16em] text-[var(--text-muted)]">
+                    {formatTransactionDate(transaction.date)}
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-[var(--text-strong)]">
+                    {transaction.category}
+                  </p>
+                </div>
+                <span
+                  className={clsx(
+                    'inline-flex rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-wide',
+                    transaction.type === 'income'
+                      ? 'bg-[var(--positive)]/15 text-[var(--positive)]'
+                      : 'bg-[var(--negative)]/15 text-[var(--negative)]',
+                  )}
+                >
+                  {transaction.type}
+                </span>
+              </div>
+
+              <p
+                className={clsx(
+                  'mt-2 text-base font-semibold',
+                  transaction.type === 'income'
+                    ? 'text-[var(--positive)]'
+                    : 'text-[var(--negative)]',
+                )}
+              >
+                {transaction.type === 'income' ? '+' : '-'}
+                {formatCurrency(transaction.amount)}
+              </p>
+
+              <p className="mt-2 text-sm text-[var(--text-muted)]">{transaction.note}</p>
+
+              {canManage ? (
+                <div className="mt-3 flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => onEdit(transaction)}
+                    className="rounded-md border border-[var(--border)] px-2 py-1 text-xs font-medium text-[var(--text-strong)]"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onDelete(transaction.id)}
+                    className="rounded-md border border-[var(--negative)]/40 bg-[var(--negative)]/10 px-2 py-1 text-xs font-medium text-[var(--negative)]"
+                  >
+                    Delete
+                  </button>
+                </div>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div className="hidden max-h-[27rem] overflow-auto sm:block">
         <table className="min-w-full border-collapse text-left text-sm">
           <thead className="sticky top-0 bg-[var(--surface-muted)]">
             <tr>

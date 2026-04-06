@@ -81,7 +81,7 @@ function App() {
 
   return (
     <div className="app-shell min-h-screen pb-10">
-      <div className="dashboard-frame mx-auto max-w-[1240px] px-4 py-7 sm:px-6 lg:px-8">
+      <div className="dashboard-frame mx-auto max-w-[1240px] px-3 py-5 sm:px-6 sm:py-7 lg:px-8">
         <header className="hero-panel reveal-panel">
           <div className="hero-grid">
             <div>
@@ -93,7 +93,7 @@ function App() {
                 Explore balance momentum, inspect cash movement, and switch perspectives between admin and viewer controls.
               </p>
 
-              <div className="mt-6 flex flex-wrap items-center gap-2">
+              <div className="mt-6 flex flex-wrap items-center gap-2 max-[420px]:flex-col max-[420px]:items-stretch">
                 <RoleSwitcher />
                 <ThemeToggle />
               </div>

@@ -188,9 +188,19 @@ src/
 
 ## Assumptions
 
-- This is frontend-only and does not use real authentication or backend RBAC.
+- This is frontend-only and uses localStorage-backed mock authentication (register storage + login token storage), not backend auth.
 - Currency is represented in USD for demonstration.
 - Seed data is mocked and loaded from local static data on first run.
+
+## Authentication Storage Flow (Frontend Mock)
+
+- Registered users are stored in localStorage key `zynox-auth-registered-users`.
+- During login, credentials are checked against stored registered users first.
+- On successful login, a new session token is created and stored in localStorage key `zynox-auth-login-token`.
+- On logout, the login token is deleted from `zynox-auth-login-token`.
+- Admin mutation actions (add/edit/delete transaction, edit/reset budgets) require both:
+  - authenticated token present
+  - logged-in user role is `admin`
 
 ## Requirement Mapping
 

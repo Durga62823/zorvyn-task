@@ -99,7 +99,7 @@ export function AuthAccessPanel() {
 
   return (
     <div className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--soft-shadow)]">
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={() => {
